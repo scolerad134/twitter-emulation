@@ -25,6 +25,10 @@ public class Message {
     @Column(name = "tag")
     private String tag;
 
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User author;
+
     private LocalDateTime localDateTime;
 
     @PrePersist
