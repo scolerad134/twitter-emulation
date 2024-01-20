@@ -37,11 +37,11 @@ public class MessageServiceImpl implements MessageService {
     }
 
 
-//    @Override
-//    public User getUserByPrincipal(User user) {
-//        if (principal == null) return new User();
-//        return userRepository.findByUsername(principal.getName());
-//    }
+    @Override
+    public User getUserByPrincipal(Principal principal) {
+        if (principal == null) return new User();
+        return userRepository.findByUsername(principal.getName());
+    }
 
 
     @Override

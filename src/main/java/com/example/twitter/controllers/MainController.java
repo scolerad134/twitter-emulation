@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -28,14 +29,14 @@ public class MainController {
     }
 
     @GetMapping("/main")
-    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
+    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model, Principal principal) {
         if (filter == null || filter.isEmpty())
             model.addAttribute("messages", messageService.findAll());
         else
             model.addAttribute("messages", messageService.findByTag(filter));
 
-//        model.addAttribute("messages", messageService.findAll());
         model.addAttribute("filter", filter);
+        model.addAttribute("user", messageService.getUserByPrincipal(principal));
 
         return "main";
     }

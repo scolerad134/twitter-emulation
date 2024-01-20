@@ -11,5 +11,5 @@ public interface MessageService {
     public List<Message> findAll();
     public void save(User user, String text, String tag);
     public List<Message> findByTag(String tag);
-//    public User getUserByPrincipal(User principal);
+    public User getUserByPrincipal(Principal principal);
 }

@@ -24,6 +24,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         (authorize) -> authorize
                                 .dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+                                .requestMatchers("/user/**").hasAuthority("ADMIN")
                                 .requestMatchers("/", "/registration")
                                 .permitAll().anyRequest().authenticated()).
                 formLogin((form) -> form.loginPage("/login").permitAll()).logout((logout) -> logout.permitAll());

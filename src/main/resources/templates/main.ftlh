@@ -4,6 +4,9 @@
 <@c.page>
     <div>
         <@l.logout />
+        <#if user.isAdmin()>
+            <a href="/user">Admin Panel</a>
+        </#if>
     </div>
     <div>
         <form method="post">
