@@ -5,6 +5,7 @@ import com.example.twitter.models.User;
 import com.example.twitter.services.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -27,18 +28,14 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String registration(User user, Map<String, Object> model) {
+    public String registration(User user, Model model) {
         if (!userService.createUser(user)) {
-            model.put("errorMessage", "Пользователь с username: " + user.getUsername() + " уже существует");
+            model.addAttribute("errorMessage", "User with username: " + user.getUsername() + " already exists");
             return "registration";
         }
         return "redirect:/login";
     }
 }
-
-
-
-
 
 
 

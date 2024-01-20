@@ -7,11 +7,11 @@ import com.example.twitter.services.MessageServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
@@ -28,8 +28,15 @@ public class MainController {
     }
 
     @GetMapping("/main")
-    public String main(Map<String, Object> model) {
-        model.put("messages", messageService.findAll());
+    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model) {
+        if (filter == null || filter.isEmpty())
+            model.addAttribute("messages", messageService.findAll());
+        else
+            model.addAttribute("messages", messageService.findByTag(filter));
+
+//        model.addAttribute("messages", messageService.findAll());
+        model.addAttribute("filter", filter);
+
         return "main";
     }
 
@@ -37,17 +44,5 @@ public class MainController {
     public String add(@AuthenticationPrincipal User user, @RequestParam String text, @RequestParam String tag) {
         messageService.save(user, text, tag);
         return "redirect:/main";
-    }
-
-    @PostMapping("/filter")
-    public String filter(@RequestParam String filter, Map<String, Object> model) {
-        List<Message> messages;
-
-        if (filter == null || filter.isEmpty())
-            model.put("messages", messageService.findAll());
-        else
-            model.put("messages", messageService.findByTag(filter));
-
-        return "main";
     }
 }
