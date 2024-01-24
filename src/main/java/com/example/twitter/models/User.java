@@ -36,10 +36,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
-//    private List<Message> messageList = new ArrayList<>();
-
-
     private LocalDateTime localDateTime;
 
     @PrePersist

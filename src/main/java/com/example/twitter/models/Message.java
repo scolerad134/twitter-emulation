@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "messages")
@@ -35,4 +37,21 @@ public class Message {
     private void init() {
         localDateTime = LocalDateTime.now();
     }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
+        mappedBy = "message")
+    private List<Image> imageList = new ArrayList<>();
+
+    public void addImageToMessage(Image image) {
+        image.setMessage(this);
+        imageList.add(image);
+    }
 }
+
+
+
+
+
+
+
+

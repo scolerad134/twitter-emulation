@@ -5,13 +5,16 @@ import com.example.twitter.models.Message;
 import com.example.twitter.models.User;
 import com.example.twitter.services.MessageServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -41,9 +44,12 @@ public class MainController {
         return "main";
     }
 
+
     @PostMapping("/main")
-    public String add(@AuthenticationPrincipal User user, @RequestParam String text, @RequestParam String tag) {
-        messageService.save(user, text, tag);
+    public String add(@AuthenticationPrincipal User user, @RequestParam String text,
+                      @RequestParam String tag, MultipartFile file) throws IOException {
+
+        messageService.save(user, text, tag, file);
         return "redirect:/main";
     }
 }
