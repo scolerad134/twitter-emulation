@@ -5,14 +5,12 @@ import com.example.twitter.models.Role;
 import com.example.twitter.models.User;
 import com.example.twitter.services.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,23 +37,26 @@ public class UserController {
                            @RequestParam Map<String, String> form,
                            @RequestParam("userId") User user) {
 
-        user.setUsername(username);
-
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
-
-        user.getRoles().clear();
-
-        for (String key : form.keySet()) {
-            if (roles.contains(key)) {
-                user.getRoles().add(Role.valueOf(key));
-            }
-        }
-
-        userService.save(user);
+        userService.save(user, username, form);
 
         return "redirect:/user";
+    }
+
+    @GetMapping("/profile")
+    public String getProfile(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("username", user.getUsername());
+        model.addAttribute("password", user.getPassword());
+
+        return "profile";
+    }
+
+    @PostMapping("/profile")
+    public String updateProfile(@AuthenticationPrincipal User user,
+                                @RequestParam String username, @RequestParam String password) {
+
+        userService.updateProfile(user, username, password);
+
+        return "redirect:/user/profile";
     }
 }
 

@@ -31,13 +31,6 @@ public class Message {
     @JoinColumn(name = "user_id")
     private User author;
 
-    private LocalDateTime localDateTime;
-
-    @PrePersist
-    private void init() {
-        localDateTime = LocalDateTime.now();
-    }
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,
         mappedBy = "message")
     private List<Image> imageList = new ArrayList<>();
