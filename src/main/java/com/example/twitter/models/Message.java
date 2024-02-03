@@ -2,11 +2,11 @@ package com.example.twitter.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +21,7 @@ public class Message {
     @Column(name = "id")
     private Long id;
 
+    @NotBlank(message = "Message cannot be empty")
     @Column(name = "text")
     private String text;
 

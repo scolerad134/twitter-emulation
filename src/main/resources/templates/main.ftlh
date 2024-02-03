@@ -1,4 +1,5 @@
 <#import "parts/common.ftlh" as c>
+<#import "/spring.ftl" as spring />
 
 <@c.page>
     <div class="form-row">
@@ -13,11 +14,12 @@
     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
         Add new Message
     </a>
-    <div class="collapse" id="collapseExample">
+    <div class="collapse <#if isErrors??>show</#if>" id="collapseExample">
         <div class="form-group mt-3">
             <form method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <input type="text" class="form-control" name="text" placeholder="Введите сообщение" />
+                    <#if isErrors??><@spring.formInput message.text /> <@spring.showErrors "<br />"/></#if>
                 </div>
                 <div class="form-group">
                     <input type="text" class="form-control" name="tag" placeholder="Тэг">

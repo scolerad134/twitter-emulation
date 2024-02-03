@@ -1,15 +1,19 @@
+<#import "/spring.ftl" as spring />
+
 <#macro login path isRegisterForm>
     <form action="${path}" method="post">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">User Name :</label>
             <div class="col-sm-6">
                 <input type="text" name="username" class="form-control" placeholder="User name" />
+                <div style="color: red"><#if validError??><@spring.bind "user.username" /><@spring.showErrors "<br />"/></#if></div>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Password:</label>
             <div class="col-sm-6">
                 <input type="password" name="password" class="form-control" placeholder="Password" />
+                <div style="color: red"><#if validError??><@spring.bind "user.password" /><@spring.showErrors "<br />"/></#if></div>
             </div>
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}" />

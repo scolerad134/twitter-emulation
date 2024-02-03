@@ -4,11 +4,13 @@ package com.example.twitter.controllers;
 import com.example.twitter.models.Message;
 import com.example.twitter.models.User;
 import com.example.twitter.services.MessageServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,10 +48,15 @@ public class MainController {
 
 
     @PostMapping("/main")
-    public String add(@AuthenticationPrincipal User user, @RequestParam String text,
-                      @RequestParam String tag, MultipartFile file) throws IOException {
+    public String add(@AuthenticationPrincipal User user, @Valid Message message,
+                      BindingResult result, Model model, MultipartFile file) throws IOException {
 
-        messageService.save(user, text, tag, file);
+        if (result.hasErrors()) {
+            model.addAttribute("isErrors", true);
+        } else {
+            messageService.save(user, message.getText(), message.getTag(), file);
+        }
+
         return "redirect:/main";
     }
 }
