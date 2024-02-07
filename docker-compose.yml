@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  'flyway':
+    image: 'flyway/flyway:7.7'
+    #command: ['info']
+    volumes:
+      - type: 'bind'
+        source: ./config/flyway.conf
+        target: /flyway/conf/flyway.conf
+        read_only: true
+      - type: 'bind'
+        source: ./config/secret.conf
+        target: /flyway/conf/secret.conf
+        read_only: true
+      - type: 'bind'
+        source: ./sql
+        target: /flyway/sql
+        read_only: true
+    environment:
+      FLYWAY_CONFIG_FILES: /flyway/conf/flyway.conf,/flyway/conf/secret.conf
+
+    network_mode: "bridge"
+    extra_hosts:
+      - 'postgres-1:172.17.0.2'
+  postgres:
+    image: 'postgres:10'
+    container_name: 'java-postgres'
+    environment:
+      - 'POSTGRES_USER=dmosk'
+      - 'POSTGRES_PASSWORD=myPassword'
+      - 'POSTGRES_DB=lara'
+
+  app:
+    build: ./
+    container_name: 'java-app'
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/lara?
