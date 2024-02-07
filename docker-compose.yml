@@ -14,7 +14,7 @@ services:
         target: /flyway/conf/secret.conf
         read_only: true
       - type: 'bind'
-        source: ./sql
+        source: ./src/main/resources/db/migration
         target: /flyway/sql
         read_only: true
     environment:
