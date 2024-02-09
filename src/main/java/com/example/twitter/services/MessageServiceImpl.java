@@ -3,11 +3,13 @@ package com.example.twitter.services;
 import com.example.twitter.models.Image;
 import com.example.twitter.models.Message;
 import com.example.twitter.models.User;
+import com.example.twitter.repositories.ImageRepository;
 import com.example.twitter.repositories.MessageRepository;
 import com.example.twitter.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -23,6 +25,35 @@ public class MessageServiceImpl implements MessageService {
     private final MessageRepository messageRepository;
 
     private final UserRepository userRepository;
+
+    private final ImageRepository imageRepository;
+
+    @Override
+    public Message save(User currentUser, Message message, String text, String tag, MultipartFile file) throws IOException {
+        Image image;
+
+//        message = messageRepository.findById(message.getId()).orElse(null);
+
+
+        if (message.getAuthor().equals(currentUser)) {
+            if (!StringUtils.isEmpty(text)) message.setText(text);
+            if (!StringUtils.isEmpty(tag)) message.setTag(tag);
+        }
+
+        if (!file.isEmpty()) {
+
+            image = toImageEntity(file);
+            message.addImageToMessage(image);
+
+//            if (!message.getImageList().isEmpty()) {
+//                image.setId(message.getImageList().get(0).getId());
+//            }
+
+//            imageRepository.save(image);
+        }
+
+        return messageRepository.save(message);
+    }
 
     @Override
     public List<Message> findAll() {

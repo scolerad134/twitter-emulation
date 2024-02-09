@@ -50,7 +50,7 @@ public class RegistrationController {
 
         String url = "https://www.google.com/recaptcha/api/siteverify";
         String params = "?secret=6LeuEWYpAAAAACfxWvpagWXgltZHt1H6ze_9E3Gx&response=" + captchaResponse;
-        String completeUrl = url+params;
+        String completeUrl = url + params;
 
         CaptchaResponseDto captchaResponseDto =
                 restTemplate.postForObject(completeUrl, null, CaptchaResponseDto.class);

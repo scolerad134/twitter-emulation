@@ -27,7 +27,7 @@ public class SecurityConfig {
                                 .requestMatchers("/user/profile").hasAnyAuthority("ADMIN", "USER")
                                 .requestMatchers("/user").hasAuthority("ADMIN")
                                 .requestMatchers("/user/{user}").hasAuthority("ADMIN")
-                                .requestMatchers("/", "/registration", "/static/**")
+                                .requestMatchers( "/registration", "/static/**")
                                 .permitAll().anyRequest().authenticated()).
                 formLogin((form) -> form.loginPage("/login").permitAll()).logout((logout) -> logout.permitAll());
         return http.build();

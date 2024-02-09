@@ -10,6 +10,7 @@ import java.security.Principal;
 import java.util.List;
 
 public interface MessageService {
+    public Message save(User currentUser, Message message, String text, String tag, MultipartFile file) throws IOException;
     public List<Message> findAll();
     public Message save(User user, String text, String tag, MultipartFile image) throws IOException;
     public List<Message> findByTag(String tag);
