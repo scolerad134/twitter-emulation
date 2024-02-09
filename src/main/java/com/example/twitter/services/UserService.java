@@ -17,4 +17,8 @@ public interface UserService {
     public User save(User user, String username, Map<String, String> form);
 
     void updateProfile(User user, String username, String password);
+
+    void subscribe(User currentUser, User user);
+
+    void unsubscribe(User currentUser, User user);
 }

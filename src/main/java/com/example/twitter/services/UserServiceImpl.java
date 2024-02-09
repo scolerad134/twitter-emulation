@@ -82,4 +82,28 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
     }
+
+    @Override
+    public void subscribe(User currentUser, User user) {
+        user.getSubscribers().add(currentUser);
+        userRepository.save(user);
+    }
+
+    @Override
+
+    public void unsubscribe(User currentUser, User user) {
+        user.getSubscribers().remove(currentUser);
+        userRepository.save(user);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
