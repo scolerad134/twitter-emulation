@@ -8,6 +8,10 @@ import com.example.twitter.services.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,17 +38,26 @@ public class MainController {
 
     @GetMapping("/")
     public String greeting(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("name", user.getUsername());
-
+        if (user != null) model.addAttribute("user", user.getUsername());
         return "greeting";
     }
 
     @GetMapping("/main")
-    public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model, Principal principal) {
+    public String main(
+            @RequestParam(required = false, defaultValue = "") String filter,
+            Model model,
+            @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
+            Principal principal) {
+
+        Page<Message> page;
+
         if (filter == null || filter.isEmpty())
-            model.addAttribute("messages", messageService.findAll());
+            page = messageService.findAll(pageable);
         else
-            model.addAttribute("messages", messageService.findByTag(filter));
+            page = messageService.findByTag(filter, pageable);
+
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/main");
 
         model.addAttribute("filter", filter);
         model.addAttribute("user", messageService.getUserByPrincipal(principal));

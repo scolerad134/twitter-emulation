@@ -8,6 +8,8 @@ import com.example.twitter.repositories.MessageRepository;
 import com.example.twitter.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,8 +58,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> findAll() {
-        return messageRepository.findAll();
+    public Page<Message> findAll(Pageable pageable) {
+        return messageRepository.findAll(pageable);
     }
 
     @Override
@@ -101,8 +103,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public List<Message> findByTag(String tag) {
-        return messageRepository.findByTag(tag);
+    public Page<Message> findByTag(String tag, Pageable pageable) {
+        return messageRepository.findByTag(tag, pageable);
     }
 }
 
