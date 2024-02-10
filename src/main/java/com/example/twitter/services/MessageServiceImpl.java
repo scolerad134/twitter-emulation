@@ -106,6 +106,11 @@ public class MessageServiceImpl implements MessageService {
     public Page<Message> findByTag(String tag, Pageable pageable) {
         return messageRepository.findByTag(tag, pageable);
     }
+
+    @Override
+    public Page<Message> findAllByAuthor(User user, Pageable pageable) {
+        return messageRepository.findAllByAuthor(user, pageable);
+    }
 }
 
 

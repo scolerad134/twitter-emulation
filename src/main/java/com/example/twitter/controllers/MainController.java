@@ -82,14 +82,16 @@ public class MainController {
     @GetMapping("/user-messages/{user}")
     public String userMessages(@AuthenticationPrincipal User currentUser,
                                @PathVariable User user, Model model,
-                               @RequestParam(required = false) Message message) {
+                               @RequestParam(required = false) Message message,
+                               @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Set<Message> messages = user.getMessages();
+        Page<Message> page = messageService.findAllByAuthor(user, pageable);
 
         model.addAttribute("userChannel", user);
         model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
         model.addAttribute("subscribersCount", user.getSubscribers().size());
-        model.addAttribute("messages", messages);
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/user-messages/" + user.getId());
         model.addAttribute("message", message);
         model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
         model.addAttribute("isCurrentUser", currentUser.equals(user));
@@ -97,7 +99,7 @@ public class MainController {
         return "userMessages";
     }
 
-    @PostMapping("/user-messages/{user}")
+    @PostMapping("/user-mesages/{user}")
     public String updateMessage(@AuthenticationPrincipal User currentUser, @PathVariable Long user,
                                 @RequestParam(name = "id", required = false) Message message,
                                 @RequestParam("text") String text, @RequestParam("tag") String tag,

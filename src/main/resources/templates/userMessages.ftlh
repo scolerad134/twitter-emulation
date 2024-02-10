@@ -1,4 +1,5 @@
 <#import "parts/common.ftlh" as c>
+<#import "/spring.ftl" as spring />
 
 <@c.page>
     <h3>${userChannel.username}</h3>

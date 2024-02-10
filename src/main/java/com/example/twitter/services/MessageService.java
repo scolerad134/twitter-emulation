@@ -16,4 +16,5 @@ public interface MessageService {
     public Page<Message> findByTag(String tag, Pageable pageable);
     public User getUserByPrincipal(Principal principal);
     public Message findById(Long id);
+    public Page<Message> findAllByAuthor(User user, Pageable pageable);
 }
