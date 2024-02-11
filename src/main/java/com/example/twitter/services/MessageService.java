@@ -17,4 +17,6 @@ public interface MessageService {
     public User getUserByPrincipal(Principal principal);
     public Message findById(Long id);
     public Page<Message> findAllByAuthor(User user, Pageable pageable);
+
+    public void deleteMessage(Message message);
 }

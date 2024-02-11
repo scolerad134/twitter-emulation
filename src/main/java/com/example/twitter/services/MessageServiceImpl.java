@@ -111,6 +111,11 @@ public class MessageServiceImpl implements MessageService {
     public Page<Message> findAllByAuthor(User user, Pageable pageable) {
         return messageRepository.findAllByAuthor(user, pageable);
     }
+
+    @Override
+    public void deleteMessage(Message message) {
+        messageRepository.delete(message);
+    }
 }
 
 

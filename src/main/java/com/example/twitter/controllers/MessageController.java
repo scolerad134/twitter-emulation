@@ -4,6 +4,7 @@ package com.example.twitter.controllers;
 import com.example.twitter.models.Message;
 import com.example.twitter.models.User;
 import com.example.twitter.services.MessageServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,7 @@ public class MessageController {
     public String main(
             @RequestParam(required = false, defaultValue = "") String filter,
             Model model,
-            @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
             Principal principal) {
 
         Page<Message> page;
@@ -77,7 +78,7 @@ public class MessageController {
     public String userMessages(@AuthenticationPrincipal User currentUser,
                                @PathVariable User user, Model model,
                                @RequestParam(required = false) Message message,
-                               @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable) {
+                               @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
 
         Page<Message> page = messageService.findAllByAuthor(user, pageable);
 
@@ -105,5 +106,24 @@ public class MessageController {
 
         return "redirect:/user-messages/" + user;
     }
+
+    @GetMapping("/user-messages/delete/{id}")
+    public String deleteMessage(
+            @PathVariable(name = "id") Message message,
+            HttpServletRequest request) {
+
+        messageService.deleteMessage(message);
+
+        String url = request.getHeader("referer").substring(8);
+        url = url.substring(url.indexOf('/'));
+
+        return "redirect:" + url;
+    }
 }
+
+
+
+
+
+
 
