@@ -18,14 +18,14 @@
             </div>
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <#if !isRegisterForm><a href="/registration">Add new user</a></#if>
+        <#if !isRegisterForm><a href="/registration">Sign in</a></#if>
         <#if isRegisterForm>
             <div class="col-sm-6 form-group">
                 <div class="g-recaptcha" data-sitekey="6LeuEWYpAAAAAOLCBeZ_DtN9ZyVNRDa02_ObnLcX"></div>
                 <div style="color: red"><#if captchaError??>${captchaError}</#if></div>
             </div>
         </#if>
-        <button class="btn btn-primary" type="submit"><#if isRegisterForm>Create<#else>Sign In</#if></button>
+        <button class="btn btn-primary ml-3" type="submit"><#if isRegisterForm>Create<#else>Sign In</#if></button>
     </form>
 </#macro>
 
