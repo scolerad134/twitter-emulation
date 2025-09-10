@@ -30,6 +30,8 @@ services:
       - 'POSTGRES_USER=twitter_owner'
       - 'POSTGRES_PASSWORD=myPassword'
       - 'POSTGRES_DB=twitter_db'
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
   app:
     build: ./
@@ -40,3 +42,6 @@ services:
       - postgres
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/twitter_db?
+
+volumes:
+  pgdata:
