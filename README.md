@@ -116,4 +116,3 @@ docker exec -it java-postgres psql -U twitter_owner -d twitter_db
 ## Лицензия
 
 Этот проект распространяется под лицензией MIT. Подробности смотрите в файле `LICENSE` (если он есть).
-
