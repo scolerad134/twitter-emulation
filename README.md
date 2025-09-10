@@ -64,17 +64,17 @@ GRANT ALL PRIVILEGES ON DATABASE twitter_db TO twitter_owner;
 
 1.  **Остановите и удалите предыдущие контейнеры (если они запущены)**:
     ```bash
-docker compose down
+    docker compose down
     ```
 
 2.  **Пересоберите образы Docker**:
     ```bash
-docker compose build
+    docker compose build
     ```
 
 3.  **Запустите контейнеры**:
     ```bash
-docker compose up -d
+    docker compose up -d
     ```
 
 ### 4. Доступ к приложению
