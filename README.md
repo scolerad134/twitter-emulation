@@ -81,7 +81,7 @@ GRANT ALL PRIVILEGES ON DATABASE twitter_db TO twitter_owner;
 
 После успешного запуска контейнеров, приложение будет доступно в вашем браузере по адресу:
 
-[http://localhost:80/](http://localhost:8080/)
+[http://localhost:8080/](http://localhost:8080/)
 
 ### 5. Подключение к базе данных (необязательно)
 
