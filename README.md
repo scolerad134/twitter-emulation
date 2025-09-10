@@ -35,7 +35,7 @@
 ### 1. Клонирование репозитория
 
 ```bash
-git clone <URL вашего репозитория>
+git clone https://github.com/scolerad134/twitter-emulation
 cd twitter-emulation
 ```
 
