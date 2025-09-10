@@ -27,9 +27,9 @@ services:
     image: 'postgres:10'
     container_name: 'java-postgres'
     environment:
-      - 'POSTGRES_USER=dmosk'
+      - 'POSTGRES_USER=twitter_owner'
       - 'POSTGRES_PASSWORD=myPassword'
-      - 'POSTGRES_DB=lara'
+      - 'POSTGRES_DB=twitter_db'
 
   app:
     build: ./
@@ -39,4 +39,4 @@ services:
     depends_on:
       - postgres
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/lara?
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/twitter_db?
