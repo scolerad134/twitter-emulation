@@ -1,4 +1,3 @@
-
 # Twitter Emulation Project
 
 ## Описание проекта
@@ -36,7 +35,7 @@
 ### 1. Клонирование репозитория
 
 ```bash
-git clone https://github.com/scolerad134/twitter-emulation
+git clone <URL вашего репозитория>
 cd twitter-emulation
 ```
 
