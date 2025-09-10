@@ -18,7 +18,7 @@
             </div>
         </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <#if !isRegisterForm><a href="/registration">Sign in</a></#if>
+        <#if !isRegisterForm><a href="/registration">Sign up</a></#if>
         <#if isRegisterForm>
             <div class="col-sm-6 form-group">
                 <div class="g-recaptcha" data-sitekey="6LeuEWYpAAAAAOLCBeZ_DtN9ZyVNRDa02_ObnLcX"></div>
